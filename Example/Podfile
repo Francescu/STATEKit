@@ -1,7 +1,5 @@
 pod "STATEKit", :path => "../STATEKit.podspec"
 
-target "Demo" do
-end
-
-target "DemoTests" do
-end
+pod 'Masonry'
+pod 'libextobjc'
+pod 'TBXML'

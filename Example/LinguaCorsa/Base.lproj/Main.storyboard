@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="efs-co-NFo">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <scenes>
+        <!--Main View Controller - LINGUA CORSA-->
+        <scene sceneID="xBe-lG-cJb">
+            <objects>
+                <viewController id="u9f-Ib-9K3" customClass="FSMainViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qrn-Aw-YWE"/>
+                        <viewControllerLayoutGuide type="bottom" id="A34-Tf-B7v"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Olu-nT-RU6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="hnx-pB-nUn">
+                                <rect key="frame" x="20" y="0.0" width="280" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="&lt;">
+                                        <attributes>
+                                            <color key="NSColor" red="0.92941182850000004" green="0.8980392814" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
+                                            <font key="NSFont" size="44" name="HelveticaNeue-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="LINGUA">
+                                        <attributes>
+                                            <color key="NSColor" red="0.60392159219999997" green="0.94117653369999998" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
+                                            <font key="NSFont" size="31" name="HelveticaNeue-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=":">
+                                        <attributes>
+                                            <color key="NSColor" red="0.92941182850000004" green="0.8980392814" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
+                                            <font key="NSFont" size="44" name="HelveticaNeue-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="CORSA">
+                                        <attributes>
+                                            <color key="NSColor" red="0.3803921938" green="0.81960791349999995" blue="0.83921575550000005" alpha="1" colorSpace="deviceRGB"/>
+                                            <font key="NSFont" size="31" name="HelveticaNeue-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=">">
+                                        <attributes>
+                                            <color key="NSColor" red="0.92941182850000004" green="0.8980392814" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
+                                            <font key="NSFont" size="44" name="HelveticaNeue-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Parolla" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FOl-Sh-tg2" userLabel="WordInput">
+                                <rect key="frame" x="31" y="123" width="257" height="92"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="34"/>
+                                <textInputTraits key="textInputTraits" keyboardAppearance="light" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="u9f-Ib-9K3" id="1tk-py-Bju"/>
+                                </connections>
+                            </textField>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0R0-rx-mXf">
+                                <rect key="frame" x="142" y="266" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="0R0-rx-mXf" secondAttribute="centerX" id="BdQ-zE-r5o"/>
+                            <constraint firstAttribute="centerY" secondItem="0R0-rx-mXf" secondAttribute="centerY" id="sjd-ad-lXw"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="LINGUA CORSA" id="aXq-TG-9SL"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="headerLabel" destination="hnx-pB-nUn" id="xF8-ht-qrI"/>
+                        <outlet property="loadingView" destination="0R0-rx-mXf" id="wZr-cj-vHF"/>
+                        <outlet property="textfield" destination="FOl-Sh-tg2" id="bTL-KE-8ya"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dxf-UN-34a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-155" y="-394"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="STS-cd-eAV">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="efs-co-NFo" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NSy-go-Jgh">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="u9f-Ib-9K3" kind="relationship" relationship="rootViewController" id="cve-bA-Ana"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Z1-Dp-Ile" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-679" y="-578"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
