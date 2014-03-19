@@ -1,5 +1,5 @@
-pod "STATEKit", :path => "../STATEKit.podspec"
-
 pod 'Masonry'
-pod 'libextobjc'
 pod 'TBXML'
+pod 'GPUImage'
+pod 'libextobjc'
+pod 'YOLOKit'

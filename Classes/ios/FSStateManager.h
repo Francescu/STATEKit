@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FSStateContainer.h"
 #import "FSState.h"
 
 extern NSString* const enterFunction;
 extern NSString* const exitFunction;
 
-@interface FSStateManager : FSState
+@interface FSStateManager : FSStateContainer
 
 @property (nonatomic, strong, readonly) FSState *currentState;
 

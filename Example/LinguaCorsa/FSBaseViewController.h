@@ -1,5 +1,5 @@
 //
-//  FSMainViewController.h
+//  FSBaseViewController.h
 //  LinguaCorsa
 //
 //  Created by Francescu SANTONI on 16/03/2014.
@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FSBaseViewController.h"
 
-@interface FSMainViewController : FSBaseViewController
+@interface FSBaseViewController : UIViewController
 
 @end

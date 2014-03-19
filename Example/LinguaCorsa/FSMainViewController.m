@@ -7,16 +7,13 @@
 //
 
 #import "FSMainViewController.h"
+#import "GPUImage.h"
 
-// DEMO RELATED
 #import "FSRequestManager.h"
-
-// Advised to use STATEKit
+#import "FSRequest.h"
 #import "Masonry.h"
-#import <EXTScope.h>
-
-// STATEKit
 #import "FSStateManager.h"
+#import <EXTScope.h>
 
 @interface FSMainViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *textfield;
@@ -28,16 +25,20 @@
 
 @implementation FSMainViewController
 
-#pragma mark - UI
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self initialUISetup];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
     
+    NSDictionary *attributes = @{NSFontAttributeName: self.textfield.font,
+                                 NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:0.3f]};
+    NSAttributedString *placeholder = [[NSAttributedString alloc] initWithString:self.textfield.placeholder attributes:attributes];
+    self.textfield.attributedPlaceholder = placeholder;
+    
+    [self.textfield becomeFirstResponder];
+
     @weakify(self)
-    
     NSDictionary *setup =
     
     @{@"main" :
@@ -88,25 +89,16 @@
                 [self.loadingView stopAnimating];
             }}
       };
- 
+    
+    
     self.stateManager = FSStateManager.new.setup(setup);
     self.stateManager.transitionTo(@"main");
-
+    
 }
 
 - (void)cleanLayoutConstraints
 {
     [self.view removeConstraints:self.view.constraints];
-}
-
-- (void)initialUISetup
-{
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    NSDictionary *attributes = @{NSFontAttributeName: self.textfield.font,
-                                 NSForegroundColorAttributeName: [UIColor colorWithWhite:1.f alpha:0.3f]};
-    NSAttributedString *placeholder = [[NSAttributedString alloc] initWithString:self.textfield.placeholder attributes:attributes];
-    self.textfield.attributedPlaceholder = placeholder;
-    [self.textfield becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -126,9 +118,6 @@
     [super viewDidAppear:animated];
 }
 
-
-#pragma mark - Controller
-
 - (FSRequest *)requestFromCurrentScreenState
 {
     FSRequest *request = [[FSRequest alloc] init];
@@ -138,7 +127,6 @@
     
     return request;
 }
-
 
 #pragma mark - UITextFieldDelegate
 

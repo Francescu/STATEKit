@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FSRequest.h"
-#import "FSResult.h"
+@class FSRequest, FSResult;
 
 @interface FSRequestManager : NSObject
 @property (nonatomic, strong, readonly) FSRequest *request;

@@ -7,6 +7,7 @@
 //
 
 #import "FSAppDelegate.h"
+#import "GPUImage.h"
 
 @implementation FSAppDelegate
 
@@ -19,9 +20,11 @@
 
 - (void)setupWindowBackground
 {
+    GPUImageiOSBlurFilter *filter = [[GPUImageiOSBlurFilter alloc] init];
+    [filter setBlurRadiusInPixels:3];
     
     UIImage *original = [UIImage imageNamed:@"Background"];
-    UIImage *blurred = [UIImage imageNamed:@"BackgroundBlurred"];
+    UIImage *blurred = [filter imageByFilteringImage:original];
     
     UIImageView *background = [[UIImageView alloc] initWithImage:blurred];
     [background setAlpha:0];
