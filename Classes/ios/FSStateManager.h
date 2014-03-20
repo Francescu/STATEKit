@@ -7,23 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "STATEKitConstants.h"
 #import "FSStateContainer.h"
 #import "FSState.h"
 
-#define UNSTRING(s) NSString* const s = @#s;
-#define STkExtern(s) extern NSString* const s;
 
 STkExtern(enterFunction)
 STkExtern(exitFunction)
 
 STkExtern(textfieldWillEdit)
 STkExtern(textfieldWillReturn)
+STkExtern(textfieldWillChangeText)
 
-#ifdef DEBUG
-#   define STkL(...) NSLog(__VA_ARGS__)
-#else
-#   define STkL(...)
-#endif
+STkExtern(kSTkTextFieldParamsKeyRange)
+STkExtern(kSTkTextFieldParamsKeyReplacementString)
+
+@interface UITextField (STATEKit)
+- (NSDictionary *(^)(NSString* const eventName))last;
+@end
 
 @interface FSStateManager : FSStateContainer <UITextFieldDelegate>
 

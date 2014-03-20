@@ -8,6 +8,7 @@
 
 #import "FSState.h"
 #import "FSStateManager.h"
+#import "FSFunctionCall.h"
 
 @interface FSState ()
 @end
@@ -25,56 +26,33 @@
     return self;
 }
 
-- (FSState *(^)(NSString *functionName))call
-{
-    return ^(NSString *functionName)
-    {
-        FSFunctionBlock function = self.function(functionName);
-        
-        if (function)
-        {
-            function();
-        }
-        
-        return self;
-    };
-}
-
-- (BOOL (^)(NSString *functionName, BOOL defaultValue))event
-{
-    return ^(NSString *functionName, BOOL defaultValue)
-    {
-        FSFunctionBlock function = self.function(functionName);
-        
-        if (function)
-        {
-            return function();
-        }
-        
-        return defaultValue;
-    };
-}
-
-- (id (^)(NSString *functionName))function
+- (FSFunctionCall* (^)(NSString *functionName))functionCall
 {
     return ^(NSString *functionName)
     {
         id function = self.functions[functionName];
         
+        FSFunctionCall *functionCall = nil;
+        
         if (!function)
         {
             if (self.parent)
             {
-                return self.parent.function(functionName);
+                return self.parent.functionCall(functionName);
             }
             else
             {
-                //fail ?
-                return function;
+                STkL(@"WARNING : No function '%@'!",functionName);
+                return functionCall;
             }
         }
+        functionCall = [[FSFunctionCall alloc] init];
         
-        return function;
+        functionCall.functionName = functionName;
+        functionCall.functionBlock = function;
+        functionCall.state = self;
+        
+        return functionCall;
         
     };
 }

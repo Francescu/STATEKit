@@ -7,19 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "STATEKitConstants.h"
 #import "FSStateContainer.h"
 
-@class FSStateManager, FSFunctionCall;
+@class FSStateManager;
+
+typedef void (^FSFunctionBlock)(FSStateManager *manager);
+
 @interface FSState : FSStateContainer
 
-@property (nonatomic, copy, readonly) NSString *identifier;
-@property (nonatomic, copy, readonly) NSString *globalIdentifier;
-
+@property (nonatomic, copy) NSString *identifier;
 @property (nonatomic, copy) NSDictionary *functions;
 
 @property (nonatomic, weak) FSState *parent;
 
+- (FSState *(^)(FSStateManager *manager, NSString *functionName))call;
 - (FSState *(^)(NSDictionary *setup))setup;
 
 - (FSState *(^)(NSString *identifier, FSFunctionBlock function))addFunction;
@@ -27,8 +28,4 @@
 
 + (instancetype)stateWithIdentifier:(NSString *)identifier parent:(FSState *)parent;
 
-- (BOOL (^)(FSState *state))isDescendantOf;
-- (BOOL (^)(FSState *state))isAncestorOf;
-
-- (FSFunctionCall* (^)(NSString *functionName))functionCall;
 @end
