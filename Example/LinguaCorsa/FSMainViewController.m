@@ -15,6 +15,12 @@
 #import "FSStateManager.h"
 #import <EXTScope.h>
 
+UNSTRING(mainState)
+UNSTRING(transitioningState)
+UNSTRING(resultsState)
+UNSTRING(loadingState)
+UNSTRING(searchAction)
+
 @interface FSMainViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *textfield;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
@@ -41,7 +47,8 @@
     @weakify(self)
     NSDictionary *setup =
     
-    @{@"main" :
+    @{
+      mainState :
           @{enterFunction:^{
               @strongify(self)
               [self cleanLayoutConstraints];
@@ -58,18 +65,44 @@
                   make.right.equalTo(self.textfield.superview);
               }];
               
+              self.stateManager.listen(self.textfield).forward(textfieldWillReturn, searchAction);
+              
+              [self.headerLabel setNeedsDisplay];
               [self.view layoutIfNeeded];
-          }},
+          },
+            exitFunction:^{
+                @strongify(self)
+                self.stateManager.listen(self.textfield).unforward(textfieldWillReturn);
+            },
+            searchAction:^{
+                @strongify(self)
+
+                FSRequest *request = [self requestFromCurrentScreenState];
+                FSRequestManager *manager = [[FSRequestManager alloc] initWithRequest:request];
+                
+                self.stateManager.transitionTo(loadingState);
+                
+                [manager startRequestWithCompletion:^(FSResult *result, NSError *error) {
+                    
+                    [UIView animateWithDuration:0.5 animations:^{
+                        self.stateManager.transitionTo(resultsState);
+                    }];
+                }];
+                
+                return YES;
+            }
+            
+            },
       
-      @"results"  :
+      resultsState:
           @{enterFunction:^{
               @strongify(self)
               [self cleanLayoutConstraints];
               
               [self.headerLabel makeConstraints:^(MASConstraintMaker *make) {
                   make.top.equalTo(@(10));
-                  make.left.equalTo(self.textfield.superview);
-                  make.right.equalTo(self.textfield.superview).multipliedBy(0.5);
+                  make.left.equalTo(self.textfield.superview).with.offset(10);
+                  make.right.equalTo(self.textfield.superview).with.offset(-10);
               }];
               
               [self.textfield makeConstraints:^(MASConstraintMaker *make) {
@@ -78,8 +111,26 @@
                   make.right.equalTo(self.textfield.superview).with.offset(-10);
               }];
               [self.view layoutIfNeeded];
-          }},
-      @"loading"  :
+              self.stateManager.listen(self.textfield).forward(textfieldWillEdit, @"backToMain");
+              
+              [self.textfield resignFirstResponder];
+          },
+            exitFunction:^{
+                @strongify(self)
+                self.stateManager.mute(self.textfield);
+            },
+            @"backToMain":^{
+                @strongify(self)
+                
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.stateManager.transitionTo(mainState);
+                }];
+
+                return YES;
+            }
+            },
+      
+      loadingState  :
           @{enterFunction:^{
               @strongify(self)
               [self.loadingView startAnimating];
@@ -92,7 +143,7 @@
     
     
     self.stateManager = FSStateManager.new.setup(setup);
-    self.stateManager.transitionTo(@"main");
+    self.stateManager.transitionTo(mainState);
     
 }
 
@@ -128,25 +179,5 @@
     return request;
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    FSRequest *request = [self requestFromCurrentScreenState];
-    FSRequestManager *manager = [[FSRequestManager alloc] initWithRequest:request];
-    
-    self.stateManager.transitionTo(@"loading");
-    
-    [manager startRequestWithCompletion:^(FSResult *result, NSError *error) {
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            self.stateManager.transitionTo(@"results");
-        } completion:^(BOOL finished) {
-            [self.textfield resignFirstResponder];
-        }];
-    }];
-    
-    return YES;
-}
 
 @end
