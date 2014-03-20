@@ -25,29 +25,57 @@
     return self;
 }
 
-- (FSState *(^)(FSStateManager *manager, NSString *functionName))call
+- (FSState *(^)(NSString *functionName))call
 {
-    return ^(FSStateManager *manager, NSString *functionName)
+    return ^(NSString *functionName)
     {
-        FSFunctionBlock function = self.functions[functionName];
+        FSFunctionBlock function = self.function(functionName);
+        
+        if (function)
+        {
+            function();
+        }
+        
+        return self;
+    };
+}
 
+- (BOOL (^)(NSString *functionName, BOOL defaultValue))event
+{
+    return ^(NSString *functionName, BOOL defaultValue)
+    {
+        FSFunctionBlock function = self.function(functionName);
+        
+        if (function)
+        {
+            return function();
+        }
+        
+        return defaultValue;
+    };
+}
+
+- (id (^)(NSString *functionName))function
+{
+    return ^(NSString *functionName)
+    {
+        id function = self.functions[functionName];
+        
         if (!function)
         {
             if (self.parent)
             {
-                self.parent.call(manager, functionName);
+                return self.parent.function(functionName);
             }
             else
             {
                 //fail ?
+                return function;
             }
         }
-        else
-        {
-            function(manager);
-        }
         
-        return self;
+        return function;
+        
     };
 }
 
@@ -60,7 +88,7 @@
 + (instancetype)stateWithIdentifier:(NSString *)identifier parent:(FSState *)parent
 {
     FSState *state = [[FSState alloc] init];
-    state.identifier = identifier;
+    state->_identifier = identifier;
     state.parent = parent;
     return state;
 }
@@ -99,5 +127,40 @@
     };
 }
 
+- (NSString *)globalIdentifier
+{
+    if (self.parent)
+    {
+        return [NSString stringWithFormat:@"%@.%@",self.parent.globalIdentifier,self.identifier];
+    }
+    return self.identifier;
+}
 
+- (BOOL (^)(FSState *state))isDescendantOf
+{
+    return ^(FSState *state){
+        
+        if (self.parent)
+        {
+            if (self.parent == state)
+            {
+                return YES;
+            }
+            else
+            {
+                return  self.parent.isDescendantOf(state);
+            }
+        }
+        
+        return NO;
+    };
+
+}
+
+- (BOOL (^)(FSState *state))isAncestorOf
+{
+    return ^(FSState *state){
+        return state.isDescendantOf(self);
+    };
+}
 @end

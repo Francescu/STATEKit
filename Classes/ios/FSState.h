@@ -11,16 +11,21 @@
 
 @class FSStateManager;
 
-typedef void (^FSFunctionBlock)(FSStateManager *manager);
+typedef BOOL (^FSFunctionBlock)();
+//typedef BOOL (^FSFunctionListenerBlock)(FSStateManager *manager, id context);
 
 @interface FSState : FSStateContainer
 
-@property (nonatomic, copy) NSString *identifier;
+@property (nonatomic, copy, readonly) NSString *identifier;
+@property (nonatomic, copy, readonly) NSString *globalIdentifier;
+
 @property (nonatomic, copy) NSDictionary *functions;
 
 @property (nonatomic, weak) FSState *parent;
 
-- (FSState *(^)(FSStateManager *manager, NSString *functionName))call;
+- (FSState *(^)(NSString *functionName))call;
+- (BOOL (^)(NSString *functionName, BOOL defaultValue))event;
+
 - (FSState *(^)(NSDictionary *setup))setup;
 
 - (FSState *(^)(NSString *identifier, FSFunctionBlock function))addFunction;
@@ -28,4 +33,8 @@ typedef void (^FSFunctionBlock)(FSStateManager *manager);
 
 + (instancetype)stateWithIdentifier:(NSString *)identifier parent:(FSState *)parent;
 
+- (BOOL (^)(FSState *state))isDescendantOf;
+- (BOOL (^)(FSState *state))isAncestorOf;
+
+- (id (^)(NSString *functionName))function;
 @end

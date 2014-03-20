@@ -29,7 +29,7 @@
 {
     return ^(NSString *identifier)
     {
-        FSState *parent = ([self class] == [FSState class]) ? (FSState *)self : nil;
+        FSState *parent = ([self isKindOfClass:[FSState class]]) ? (FSState *)self : nil;
             
         FSState *state = [FSState stateWithIdentifier:identifier parent:parent];
         NSMutableDictionary *states = [self.children mutableCopy];
