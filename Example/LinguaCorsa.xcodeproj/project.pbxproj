@@ -34,6 +34,8 @@
 		EF2BB0AD18D65CE50094F14C /* FSWordDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2BB0AC18D65CE50094F14C /* FSWordDefinition.m */; };
 		EF2BB0B118D65DD70094F14C /* FSRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2BB0B018D65DD70094F14C /* FSRequestManager.m */; };
 		EF2BB0B418D65E460094F14C /* FSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2BB0B318D65E460094F14C /* FSRequest.m */; };
+		EF683DC318DB8DBB00DA6E8F /* FSCallStack.m in Sources */ = {isa = PBXBuildFile; fileRef = EF683DBF18DB8DBB00DA6E8F /* FSCallStack.m */; };
+		EF683DC418DB8DBB00DA6E8F /* FSFunctionCall.m in Sources */ = {isa = PBXBuildFile; fileRef = EF683DC118DB8DBB00DA6E8F /* FSFunctionCall.m */; };
 		EFF5D02F18D918C0008EFCBA /* FSState.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF5D02A18D918C0008EFCBA /* FSState.m */; };
 		EFF5D03018D918C0008EFCBA /* FSStateContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF5D02C18D918C0008EFCBA /* FSStateContainer.m */; };
 		EFF5D03118D918C0008EFCBA /* FSStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF5D02E18D918C0008EFCBA /* FSStateManager.m */; };
@@ -88,6 +90,11 @@
 		EF2BB0B018D65DD70094F14C /* FSRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSRequestManager.m; sourceTree = "<group>"; };
 		EF2BB0B218D65E460094F14C /* FSRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSRequest.h; sourceTree = "<group>"; };
 		EF2BB0B318D65E460094F14C /* FSRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSRequest.m; sourceTree = "<group>"; };
+		EF683DBE18DB8DBB00DA6E8F /* FSCallStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSCallStack.h; path = ../../Classes/ios/FSCallStack.h; sourceTree = "<group>"; };
+		EF683DBF18DB8DBB00DA6E8F /* FSCallStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSCallStack.m; path = ../../Classes/ios/FSCallStack.m; sourceTree = "<group>"; };
+		EF683DC018DB8DBB00DA6E8F /* FSFunctionCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSFunctionCall.h; path = ../../Classes/ios/FSFunctionCall.h; sourceTree = "<group>"; };
+		EF683DC118DB8DBB00DA6E8F /* FSFunctionCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSFunctionCall.m; path = ../../Classes/ios/FSFunctionCall.m; sourceTree = "<group>"; };
+		EF683DC218DB8DBB00DA6E8F /* STATEKitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STATEKitConstants.h; path = ../../Classes/ios/STATEKitConstants.h; sourceTree = "<group>"; };
 		EFF5D02918D918C0008EFCBA /* FSState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSState.h; path = ../../../STATEKit/Classes/ios/FSState.h; sourceTree = "<group>"; };
 		EFF5D02A18D918C0008EFCBA /* FSState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSState.m; path = ../../../STATEKit/Classes/ios/FSState.m; sourceTree = "<group>"; };
 		EFF5D02B18D918C0008EFCBA /* FSStateContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSStateContainer.h; path = ../../../STATEKit/Classes/ios/FSStateContainer.h; sourceTree = "<group>"; };
@@ -246,6 +253,11 @@
 		EFF5D01F18D90A67008EFCBA /* STATEKit */ = {
 			isa = PBXGroup;
 			children = (
+				EF683DBE18DB8DBB00DA6E8F /* FSCallStack.h */,
+				EF683DBF18DB8DBB00DA6E8F /* FSCallStack.m */,
+				EF683DC018DB8DBB00DA6E8F /* FSFunctionCall.h */,
+				EF683DC118DB8DBB00DA6E8F /* FSFunctionCall.m */,
+				EF683DC218DB8DBB00DA6E8F /* STATEKitConstants.h */,
 				EFF5D02918D918C0008EFCBA /* FSState.h */,
 				EFF5D02A18D918C0008EFCBA /* FSState.m */,
 				EFF5D02B18D918C0008EFCBA /* FSStateContainer.h */,
@@ -397,10 +409,12 @@
 				EFF5D03118D918C0008EFCBA /* FSStateManager.m in Sources */,
 				EF2BB0B118D65DD70094F14C /* FSRequestManager.m in Sources */,
 				EF2BB0B418D65E460094F14C /* FSRequest.m in Sources */,
+				EF683DC418DB8DBB00DA6E8F /* FSFunctionCall.m in Sources */,
 				EFF5D03018D918C0008EFCBA /* FSStateContainer.m in Sources */,
 				EF2BB08018D648050094F14C /* FSMainViewController.m in Sources */,
 				EF2BB05618D641DB0094F14C /* main.m in Sources */,
 				EF2BB0A918D65CC30094F14C /* FSResult.m in Sources */,
+				EF683DC318DB8DBB00DA6E8F /* FSCallStack.m in Sources */,
 				EF2BB0AD18D65CE50094F14C /* FSWordDefinition.m in Sources */,
 				EF2BB09F18D658F40094F14C /* FSBaseViewController.m in Sources */,
 				EFF5D02F18D918C0008EFCBA /* FSState.m in Sources */,
