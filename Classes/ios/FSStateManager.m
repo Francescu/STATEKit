@@ -32,8 +32,9 @@ static char stk_params_key;
     {
         globalParams = @{};
     }
+    
     NSMutableDictionary *mutableParams = [globalParams mutableCopy];
-    mutableParams[eventName] = globalParams;
+    mutableParams[eventName] = params;
     
     objc_setAssociatedObject(self, &stk_params_key, mutableParams, OBJC_ASSOCIATION_COPY);
 }

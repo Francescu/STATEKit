@@ -31,7 +31,6 @@ STkExtern(kSTkTextFieldParamsKeyReplacementString)
 @property (nonatomic, strong, readonly) FSState *currentState;
 
 /* Public Use */
-
 - (FSStateManager *(^)(NSString *identifier))transitionTo;
 
 - (FSStateManager *(^)(NSString *functionName))call;
