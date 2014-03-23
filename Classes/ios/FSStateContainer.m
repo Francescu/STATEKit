@@ -45,7 +45,7 @@
     {
         if (!self.children[identifier])
         {
-            //fail ?
+            STkL(@"WARNING : Failed to find state '%@' from '%@' !",identifier, self.description);
         }
         
         return self.children[identifier];

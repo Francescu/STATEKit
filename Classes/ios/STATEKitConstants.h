@@ -26,8 +26,9 @@
  *      1 -> Static     -> The binding will call the forwared function itself
  */
 #define kSTkConfig_STATIC_FORWARDING 1
+#define kSTkConfig_STATE_DELIMITER @"."
 
-
+#define STkPath(...) [@[__VA_ARGS__] componentsJoinedByString:kSTkConfig_STATE_DELIMITER]
 typedef BOOL (^FSFunctionBlock)();
 
 #endif

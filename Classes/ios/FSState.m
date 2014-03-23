@@ -109,9 +109,20 @@
 {
     if (self.parent)
     {
-        return [NSString stringWithFormat:@"%@.%@",self.parent.globalIdentifier,self.identifier];
+        return [NSString stringWithFormat:@"%@%@%@",self.parent.globalIdentifier,kSTkConfig_STATE_DELIMITER,self.identifier];
     }
     return self.identifier;
+}
+
+- (NSArray *)path
+{
+    if (self.parent)
+    {
+        NSMutableArray *path = [self.parent.path mutableCopy];
+        [path addObject:self];
+        return [path copy];
+    }
+    return @[self];
 }
 
 - (BOOL (^)(FSState *state))isDescendantOf

@@ -20,6 +20,7 @@ UNSTRING(textfieldWillChangeText)
 UNSTRING(kSTkTextFieldParamsKeyRange)
 UNSTRING(kSTkTextFieldParamsKeyReplacementString)
 
+UNSTRING(kSTkSPECIAL_KEYWORD_TRANSITION_FUNC_NAME)
 
 @implementation UITextField (STATEKit)
 
@@ -167,6 +168,32 @@ static char stk_params_key;
     };
 }
 
+- (FSStateManager *(^)(NSString *eventName, NSString *path))forwardToTransition
+{
+    return ^(NSString *eventName, NSString *path)
+    {
+        id element = self.currentElement;
+        if (element && path)
+        {
+            FSFunctionCall *call = [[FSFunctionCall alloc] init];
+            call.state = self.stack.currentState;
+            call.functionName = kSTkSPECIAL_KEYWORD_TRANSITION_FUNC_NAME;
+            
+            __weak __typeof__(self) weakSelf = self;
+            
+            call.functionBlock = ^BOOL()
+            {
+                __typeof__(weakSelf) strongSelf = weakSelf;
+                strongSelf.transitionTo([path copy]);
+                return YES;
+            };
+            
+            [self setForwardedCall:call ForElement:element eventName:eventName];
+        }
+        return self;
+    };
+}
+
 - (FSStateManager *(^)(NSString *eventName))unforward
 {
     return ^(NSString *eventName){
@@ -236,13 +263,89 @@ static char forwards_key;
 {
     return ^(NSString *identifier)
     {
+        FSState *previousState = self.currentState;
+        NSMutableArray *previousPath = [[NSMutableArray alloc] initWithArray:previousState.path];
         
-        self.call(exitFunction);
-        _currentState = self.state(identifier);
-        return self.call(enterFunction);
+        FSState *nextState = self.globalState(identifier);
+        NSMutableArray *nextPath = [[NSMutableArray alloc] initWithArray:nextState.path];
+        
+        BOOL stop = NO;
+        while ([previousPath count] > 0 && [nextPath count] > 0 && !stop)
+        {
+            if ([previousPath firstObject] == [nextPath firstObject])
+            {
+                [previousPath removeObjectAtIndex:0];
+                [nextPath removeObjectAtIndex:0];
+            }
+            else
+            {
+                stop = YES;
+            }
+        }
+        
+        for (FSState *state in [previousPath reverseObjectEnumerator])
+        {
+            FSFunctionBlock block = state.functions[exitFunction];
+            if (block)
+            {
+                FSFunctionCall *func = [[FSFunctionCall alloc] init];
+                func.functionBlock = block;
+                func.state = state;
+                func.functionName = exitFunction;
+                
+                [self doFunctionCall:func];
+            }
+        }
+        
+        for (FSState *state in nextPath)
+        {
+            FSFunctionBlock block = state.functions[enterFunction];
+            if (block)
+            {
+                FSFunctionCall *func = [[FSFunctionCall alloc] init];
+                func.functionBlock = block;
+                func.state = state;
+                func.functionName = enterFunction;
+                
+                [self doFunctionCall:func];
+            }
+        }
+        
+        
+        _currentState = nextState;
+        return self;
     };
 }
 
+- (FSState *(^)(NSString *path))globalState
+{
+    return ^(NSString *path)
+    {
+        NSArray *states = [path componentsSeparatedByString:kSTkConfig_STATE_DELIMITER];
+        
+        FSState *state = nil;
+        
+        for (NSString *identifier in states)
+        {
+            if (!state)
+            {
+                state = self.state(identifier);
+            }
+            else
+            {
+                state = state.state(identifier);
+            }
+            
+            if (state == nil)
+            {
+                return state;
+            }
+            
+        }
+        
+        return state;
+    };
+}
 #pragma mark - Call functions
 
 - (FSStateManager *(^)(NSString *functionName))call
@@ -287,6 +390,11 @@ static char forwards_key;
                 return returnValue;
             }
 #else
+            if ([call.functionName isEqualToString:kSTkSPECIAL_KEYWORD_TRANSITION_FUNC_NAME])
+            {
+                return [self doFunctionCall:call];
+            }
+            
             if (self.currentState)
             {
                 FSFunctionCall *func = self.currentState.functionCall(call.functionName);

@@ -27,6 +27,7 @@
 
 + (instancetype)stateWithIdentifier:(NSString *)identifier parent:(FSState *)parent;
 
+- (NSArray *)path;
 - (BOOL (^)(FSState *state))isDescendantOf;
 - (BOOL (^)(FSState *state))isAncestorOf;
 

@@ -42,10 +42,12 @@ STkExtern(kSTkTextFieldParamsKeyReplacementString)
 
 - (FSStateManager *(^)(NSString *eventName, NSString *functionName))forward;
 - (FSStateManager *(^)(NSString *eventName))unforward;
+- (FSStateManager *(^)(NSString *eventName, NSString *path))forwardToTransition;
 
 /* Internal Use */
 
 - (FSStateManager *(^)(UITextField *textfield))listenTextField;
 - (BOOL (^)(NSString *functionName, id context, BOOL defaultValue))event;
+- (FSState *(^)(NSString *path))globalState;
 
 @end
