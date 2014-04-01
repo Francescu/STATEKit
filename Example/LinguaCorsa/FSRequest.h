@@ -16,10 +16,10 @@ typedef NS_ENUM(int, FSRequestLanguage)
 
 typedef NS_ENUM(int, FSRequestSearchMode)
 {
-    FSRequestSearchOptionEqualsTo = 1,
-    FSRequestSearchOptionBeginsWith = 2,
-    FSRequestSearchOptionContains = 3,
-    FSRequestSearchOptionEndsWith = 4
+    FSRequestSearchOptionBeginsWith = 1,
+    FSRequestSearchOptionContains = 2,
+    FSRequestSearchOptionEndsWith = 3,
+    FSRequestSearchOptionEqualsTo = 4
 };
 
 @interface FSRequest : NSObject

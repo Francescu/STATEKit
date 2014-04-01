@@ -11,22 +11,33 @@
 
 #import "FSRequestManager.h"
 #import "FSRequest.h"
+#import "FSResult.h"
+#import "FSWordDefinition.h"
+
 #import "Masonry.h"
+#import "YOLO.h"
 #import "FSStateManager.h"
 #import <EXTScope.h>
 
-UNSTRING(mainState)
-UNSTRING(transitioningState)
-UNSTRING(resultsState)
+UNSTRING(searchState)
+UNSTRING(typingState)
 UNSTRING(loadingState)
-UNSTRING(searchAction)
+UNSTRING(resultsState)
+UNSTRING(transitioningState)
+
+UNSTRING(search)
+UNSTRING(back)
+UNSTRING(filterTyping)
 
 @interface FSMainViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *textfield;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingView;
+@property (weak, nonatomic) IBOutlet UIView *resultsView;
 
 @property (strong, nonatomic) FSStateManager *stateManager;
+@property (strong, nonatomic) NSArray *words;
 @end
 
 @implementation FSMainViewController
@@ -48,7 +59,7 @@ UNSTRING(searchAction)
     NSDictionary *setup =
     
     @{
-      mainState :
+      searchState :
           @{enterFunction:^{
               @strongify(self)
               [self cleanLayoutConstraints];
@@ -65,42 +76,83 @@ UNSTRING(searchAction)
                   make.right.equalTo(self.textfield.superview);
               }];
               
-              self.stateManager.listen(self.textfield).forward(textfieldWillReturn, searchAction);
-              
               [self.headerLabel setNeedsDisplay];
               [self.view layoutIfNeeded];
+              self.stateManager.listen(self.textfield).forwardToTransition(textfieldWillEdit, STkPath(searchState, typingState));
           },
             exitFunction:^{
-                @strongify(self)
-                self.stateManager.listen(self.textfield).unforward(textfieldWillReturn);
-            },
-            searchAction:^{
-                @strongify(self)
 
-                FSRequest *request = [self requestFromCurrentScreenState];
-                FSRequestManager *manager = [[FSRequestManager alloc] initWithRequest:request];
-                
-                self.stateManager.transitionTo(loadingState);
-                
-                [manager startRequestWithCompletion:^(FSResult *result, NSError *error) {
-                    
-                    [UIView animateWithDuration:0.5 animations:^{
-                        self.stateManager.transitionTo(resultsState);
-                    }];
-                }];
-                
-                return YES;
-            }
+            },
+            typingState: @{
+                    enterFunction:^{
+                        @strongify(self)
+                        self.stateManager.listen(self.textfield).forward(textfieldWillChangeText, filterTyping);
+                        self.stateManager.listen(self.textfield).forward(textfieldWillReturn, search);
+                    },
+                    exitFunction:^{
+                        @strongify(self)
+                        self.stateManager.listen(self.textfield).unforward(textfieldWillChangeText);
+                        self.stateManager.listen(self.textfield).unforward(textfieldWillReturn);
+                    },
+                    filterTyping:^{
+                        @strongify(self)
+                        NSDictionary *params = self.textfield.last(textfieldWillChangeText);
+                        if (params)
+                        {
+                            NSString *text = params[kSTkTextFieldParamsKeyReplacementString];
+                            if (text)
+                            {
+                                NSCharacterSet *set = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+                                NSRange r = [text rangeOfCharacterFromSet:set options:NSCaseInsensitiveSearch];
+                                return (BOOL)(r.location == NSNotFound);
+                            }
+                        }
+                        return NO;
+                    },
+                    search:^{
+                        @strongify(self)
+                        
+                        FSRequest *request = [self requestFromCurrentScreenState];
+                        FSRequestManager *manager = [[FSRequestManager alloc] initWithRequest:request];
+                        
+                        self.stateManager.transitionTo(STkPath(searchState,loadingState));
+                        
+                        [manager startRequestWithCompletion:^(FSResult *result, NSError *error) {
+                            self.words = result.words;
+                            
+                            [UIView animateWithDuration:0.5 animations:^{
+                                self.stateManager.transitionTo(resultsState);
+                            }];
+                        }];
+                        
+                        return YES;
+                    }
+                    },
+            loadingState: @{
+                    enterFunction:^{
+                        @strongify(self)
+                        [self.loadingView startAnimating];
+                        self.stateManager.listen(self.textfield).forward(textfieldWillChangeText, filterTyping);
+                    },
+                    exitFunction:^{
+                        @strongify(self)
+                        [self.loadingView stopAnimating];
+                        self.stateManager.listen(self.textfield).unforward(textfieldWillChangeText);
+                    },
+                    filterTyping:^{
+                        return NO;
+                    }}
             
             },
-      
+      /************** RESULTS STATE ***************/
       resultsState:
           @{enterFunction:^{
               @strongify(self)
               [self cleanLayoutConstraints];
+              [self.resultsView removeConstraints:self.resultsView.constraints];
               
               [self.headerLabel makeConstraints:^(MASConstraintMaker *make) {
-                  make.top.equalTo(@(10));
+                  make.top.equalTo(self.view.top).offset(10);
                   make.left.equalTo(self.textfield.superview).with.offset(10);
                   make.right.equalTo(self.textfield.superview).with.offset(-10);
               }];
@@ -110,46 +162,95 @@ UNSTRING(searchAction)
                   make.left.equalTo(self.textfield.superview).with.offset(10);
                   make.right.equalTo(self.textfield.superview).with.offset(-10);
               }];
-              [self.view layoutIfNeeded];
-              self.stateManager.listen(self.textfield).forward(textfieldWillEdit, @"backToMain");
               
+              [self.resultsView makeConstraints:^(MASConstraintMaker *make) {
+                  make.top.equalTo(self.textfield.mas_bottom);
+                  make.left.equalTo(self.resultsView.superview);
+                  make.right.equalTo(self.resultsView.superview.right);
+                  make.width.equalTo(self.resultsView.superview.width);
+              }];
+              
+              self.resultsView.subviews.each(^(UIView *v){[v removeFromSuperview];});
+              
+              self.resultsView.alpha = 1;
+              
+              UIView *lastView = nil;
+              
+              for (FSWordDefinition *word in self.words.first(10))
+              {
+                  UILabel *title = [[UILabel alloc] init];
+                  [title setText:word.word];
+                  [title setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:21]];
+                  [title setTextColor:[UIColor whiteColor]];
+                  [self.resultsView addSubview:title];
+                  
+                  [title makeConstraints:^(MASConstraintMaker *make) {
+                      if (lastView)
+                      {
+                          make.top.equalTo(lastView.bottom).offset(10);
+                      }
+                      else
+                      {
+                          make.top.equalTo(title.superview.top);
+                      }
+                      make.left.equalTo(title.superview.left).offset(20);
+                      make.right.equalTo(title.superview.right).offset(-10).priority(999);
+                  }];
+                  
+                  UILabel *subtitle = [[UILabel alloc] init];
+                  [subtitle setText:word.translation];
+                  [subtitle setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:17]];
+                  [subtitle setTextColor:[UIColor colorWithWhite:0.98f alpha:1.f]];
+                  
+                  [self.resultsView addSubview:subtitle];
+                  
+                  [subtitle makeConstraints:^(MASConstraintMaker *make) {
+                      make.top.equalTo(title.bottom);
+                      make.left.equalTo(subtitle.superview.left).offset(30);
+                      make.right.equalTo(subtitle.superview.right).offset(-10).priority(999);
+                  }];
+                  lastView = subtitle;
+
+              }
+              
+              [lastView makeConstraints:^(MASConstraintMaker *make) {
+                  make.bottom.equalTo(lastView.superview.mas_bottom);
+              }];
+              
+              [self.view layoutIfNeeded];
               [self.textfield resignFirstResponder];
+              
+              self.stateManager.listen(self.textfield).forwardToTransition(textfieldWillEdit,STkPath(searchState,typingState));
           },
             exitFunction:^{
                 @strongify(self)
                 self.stateManager.mute(self.textfield);
-            },
-            @"backToMain":^{
-                @strongify(self)
-                
                 [UIView animateWithDuration:0.3 animations:^{
-                    self.stateManager.transitionTo(mainState);
+                    self.resultsView.alpha = 0;
                 }];
 
-                return YES;
-            }
             },
-      
-      loadingState  :
-          @{enterFunction:^{
-              @strongify(self)
-              [self.loadingView startAnimating];
-          },
-            exitFunction:^{
-                @strongify(self)
-                [self.loadingView stopAnimating];
-            }}
+            }
       };
     
-    
     self.stateManager = FSStateManager.new.setup(setup);
-    self.stateManager.transitionTo(mainState);
+    self.stateManager.transitionTo(searchState);
     
 }
-
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+}
 - (void)cleanLayoutConstraints
 {
     [self.view removeConstraints:self.view.constraints];
+    
+    [self.scrollView removeConstraints:self.scrollView.constraints];
+    
+    [self.scrollView makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.scrollView.superview);
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -172,7 +273,7 @@ UNSTRING(searchAction)
 - (FSRequest *)requestFromCurrentScreenState
 {
     FSRequest *request = [[FSRequest alloc] init];
-    request.searchMode = FSRequestSearchOptionContains;
+    request.searchMode = FSRequestSearchOptionEqualsTo;
     request.searchLanguage = FSRequestLanguageFrench;
     request.request = self.textfield.text;
     

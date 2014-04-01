@@ -50,10 +50,6 @@
             return;
         }
         
-//        NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSLog(@"%@",result);
-        
-        
         TBXML *tbxml = [[TBXML alloc] initWithXMLData:data error:nil];
         TBXMLElement *root = tbxml.rootXMLElement;
         
@@ -77,7 +73,6 @@
         FSWordDefinition *word = [FSRequestManager wordDefinitionWithRootElement:element];
         if (word)
         {
-            NSLog(@"%@",word.description);
             [array addObject:word];
         }
         

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="efs-co-NFo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="efs-co-NFo">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <deployment version="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Main View Controller - LINGUA CORSA-->
@@ -9,74 +10,110 @@
             <objects>
                 <viewController id="u9f-Ib-9K3" customClass="FSMainViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Qrn-Aw-YWE"/>
-                        <viewControllerLayoutGuide type="bottom" id="A34-Tf-B7v"/>
+                        <viewControllerLayoutGuide type="top" id="azu-Zk-lOT"/>
+                        <viewControllerLayoutGuide type="bottom" id="fIU-M7-GsP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Olu-nT-RU6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="hnx-pB-nUn">
-                                <rect key="frame" x="20" y="0.0" width="280" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="&lt;">
-                                        <attributes>
-                                            <color key="NSColor" red="0.92941182850000004" green="0.8980392814" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
-                                            <font key="NSFont" size="44" name="HelveticaNeue-Light"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="LINGUA">
-                                        <attributes>
-                                            <color key="NSColor" red="0.60392159219999997" green="0.94117653369999998" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
-                                            <font key="NSFont" size="31" name="HelveticaNeue-Light"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=":">
-                                        <attributes>
-                                            <color key="NSColor" red="0.92941182850000004" green="0.8980392814" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
-                                            <font key="NSFont" size="44" name="HelveticaNeue-Light"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="CORSA">
-                                        <attributes>
-                                            <color key="NSColor" red="0.3803921938" green="0.81960791349999995" blue="0.83921575550000005" alpha="1" colorSpace="deviceRGB"/>
-                                            <font key="NSFont" size="31" name="HelveticaNeue-Light"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=">">
-                                        <attributes>
-                                            <color key="NSColor" red="0.92941182850000004" green="0.8980392814" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
-                                            <font key="NSFont" size="44" name="HelveticaNeue-Light"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Parolla" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FOl-Sh-tg2" userLabel="WordInput">
-                                <rect key="frame" x="31" y="123" width="257" height="92"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="34"/>
-                                <textInputTraits key="textInputTraits" keyboardAppearance="light" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="u9f-Ib-9K3" id="1tk-py-Bju"/>
-                                </connections>
-                            </textField>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0R0-rx-mXf">
-                                <rect key="frame" x="142" y="266" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Urm-On-rpL">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="hnx-pB-nUn">
+                                        <rect key="frame" x="20" y="74" width="280" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="xQd-gq-ZYX"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment content="&lt;">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.92941182850000004" green="0.8980392814" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
+                                                    <font key="NSFont" size="44" name="HelveticaNeue-Light"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="LINGUA">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.60392159219999997" green="0.94117653369999998" blue="0.91372555489999996" alpha="1" colorSpace="deviceRGB"/>
+                                                    <font key="NSFont" size="31" name="HelveticaNeue-Light"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=":">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.92941182850000004" green="0.8980392814" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
+                                                    <font key="NSFont" size="44" name="HelveticaNeue-Light"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="CORSA">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.3803921938" green="0.81960791349999995" blue="0.83921575550000005" alpha="1" colorSpace="deviceRGB"/>
+                                                    <font key="NSFont" size="31" name="HelveticaNeue-Light"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=">">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.92941182850000004" green="0.8980392814" blue="0.88627457620000005" alpha="1" colorSpace="deviceRGB"/>
+                                                    <font key="NSFont" size="44" name="HelveticaNeue-Light"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Parolla" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FOl-Sh-tg2" userLabel="WordInput">
+                                        <rect key="frame" x="31" y="143" width="257" height="92"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="257" placeholder="YES" id="Z3b-ED-Dgk"/>
+                                            <constraint firstAttribute="height" constant="92" id="r2i-2e-SUI"/>
+                                        </constraints>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="34"/>
+                                        <textInputTraits key="textInputTraits" keyboardAppearance="light" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="u9f-Ib-9K3" id="1tk-py-Bju"/>
+                                        </connections>
+                                    </textField>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0R0-rx-mXf">
+                                        <rect key="frame" x="141" y="266" width="37" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </activityIndicatorView>
+                                    <view clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sRK-gR-Tnz">
+                                        <rect key="frame" x="0.0" y="224" width="320" height="86"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="86" id="f00-Nv-WPZ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="FOl-Sh-tg2" firstAttribute="leading" secondItem="Urm-On-rpL" secondAttribute="leading" constant="31" id="1fe-d0-wH1"/>
+                                    <constraint firstItem="0R0-rx-mXf" firstAttribute="centerY" secondItem="Urm-On-rpL" secondAttribute="centerY" id="JWX-aI-vM1"/>
+                                    <constraint firstItem="sRK-gR-Tnz" firstAttribute="centerX" secondItem="Urm-On-rpL" secondAttribute="centerX" id="NtV-YT-CYV"/>
+                                    <constraint firstAttribute="bottom" secondItem="sRK-gR-Tnz" secondAttribute="bottom" constant="258" id="Q9C-9R-Nom"/>
+                                    <constraint firstItem="hnx-pB-nUn" firstAttribute="leading" secondItem="Urm-On-rpL" secondAttribute="leading" constant="20" symbolic="YES" id="Sn6-3h-wXz"/>
+                                    <constraint firstAttribute="trailing" secondItem="hnx-pB-nUn" secondAttribute="trailing" constant="20" symbolic="YES" id="TZ7-x2-7cJ"/>
+                                    <constraint firstItem="FOl-Sh-tg2" firstAttribute="top" secondItem="Urm-On-rpL" secondAttribute="top" constant="143" id="WrA-Qm-O2V"/>
+                                    <constraint firstItem="FOl-Sh-tg2" firstAttribute="centerX" secondItem="0R0-rx-mXf" secondAttribute="centerX" id="a6S-lz-tOM"/>
+                                    <constraint firstItem="sRK-gR-Tnz" firstAttribute="top" secondItem="Urm-On-rpL" secondAttribute="top" constant="224" id="fhT-8C-W4X"/>
+                                    <constraint firstItem="sRK-gR-Tnz" firstAttribute="leading" secondItem="Urm-On-rpL" secondAttribute="leading" id="gHF-H2-BaT"/>
+                                    <constraint firstItem="hnx-pB-nUn" firstAttribute="top" secondItem="Urm-On-rpL" secondAttribute="top" constant="74" id="kYe-zo-KTb"/>
+                                    <constraint firstItem="hnx-pB-nUn" firstAttribute="centerX" secondItem="sRK-gR-Tnz" secondAttribute="centerX" id="xY7-gZ-TWL"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="0R0-rx-mXf" secondAttribute="centerX" id="BdQ-zE-r5o"/>
-                            <constraint firstAttribute="centerY" secondItem="0R0-rx-mXf" secondAttribute="centerY" id="sjd-ad-lXw"/>
+                            <constraint firstAttribute="trailing" secondItem="Urm-On-rpL" secondAttribute="trailing" id="WGZ-No-hH9"/>
+                            <constraint firstItem="Urm-On-rpL" firstAttribute="top" secondItem="Olu-nT-RU6" secondAttribute="top" id="xl2-fr-Z5f"/>
+                            <constraint firstAttribute="bottom" secondItem="Urm-On-rpL" secondAttribute="bottom" id="yF8-Lh-YPR"/>
+                            <constraint firstItem="Urm-On-rpL" firstAttribute="leading" secondItem="Olu-nT-RU6" secondAttribute="leading" id="yOi-m2-jlU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="LINGUA CORSA" id="aXq-TG-9SL"/>
@@ -85,6 +122,8 @@
                     <connections>
                         <outlet property="headerLabel" destination="hnx-pB-nUn" id="xF8-ht-qrI"/>
                         <outlet property="loadingView" destination="0R0-rx-mXf" id="wZr-cj-vHF"/>
+                        <outlet property="resultsView" destination="sRK-gR-Tnz" id="blk-1V-B9x"/>
+                        <outlet property="scrollView" destination="Urm-On-rpL" id="4xg-BI-scP"/>
                         <outlet property="textfield" destination="FOl-Sh-tg2" id="bTL-KE-8ya"/>
                     </connections>
                 </viewController>
